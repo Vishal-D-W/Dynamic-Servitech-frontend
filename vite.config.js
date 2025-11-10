@@ -7,7 +7,7 @@ export default defineConfig({
     port: 5174,
     proxy: {
       '/api': {
-        target: 'https://dynamic-servitech-backend.vercel.app/',
+        target: 'https://dynamic-servitech-backend-jpyzkvaw0.vercel.app',
         changeOrigin: true,
       },
     },
