@@ -1,0 +1,52 @@
+/* Dashboard.css additions */
+.navbar {
+  background: linear-gradient(180deg, #ffffff 0%, #f6f9fe 100%);
+  border-bottom: 1px solid #e8edf4;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.navbar-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.navbar-brand h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 800;
+  color: #14213d;
+}
+.navbar-subtitle {
+  display: block;
+  margin-top: 2px;
+  color: #6b7a8c;
+  font-size: 12px;
+}
+.navbar-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.user-meta {
+  color: #334155;
+  font-size: 14px;
+}
+.btn-logout {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: #ffffff;
+  color: #0f172a;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .15s ease, border-color .15s ease;
+}
+.btn-logout:hover { background: #f7fafc; border-color: #d6e1ea; }
+.btn-logout svg { width: 16px; height: 16px; }

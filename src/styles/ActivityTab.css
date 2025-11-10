@@ -1,0 +1,59 @@
+/* src/styles/ActivityTab.css */
+:root{
+  --card:#fff; --ring:#e7ecff; --text:#0f172a; --muted:#5b6b86;
+  --shadow:0 8px 24px rgba(15,23,42,.06);
+  --pill:#111827; --pill-muted:#6b7280;
+  --green:#16a34a; --red:#ef4444; --amber:#f59e0b; --blue:#4c6fff;
+}
+
+.activity-section{max-width:1120px;margin:0 auto}
+.activity-header{margin-bottom:12px}
+.title{margin:0;font-size:20px;font-weight:800}
+.subtitle{margin:4px 0 0;color:var(--muted);font-size:13px}
+
+.alert{background:#f5f8ff;border:1px solid var(--ring);padding:10px 12px;border-radius:10px;margin-bottom:10px}
+.alert.error{background:#fef2f2;border-color:#fecaca;color:#991b1b}
+
+.table-card{
+  background:var(--card);
+  border:1px solid var(--ring);
+  border-radius:16px;
+  box-shadow:var(--shadow);
+  overflow:auto;
+}
+.activity-table{width:100%;border-collapse:separate;border-spacing:0}
+.activity-table th,.activity-table td{padding:12px 14px;border-bottom:1px solid #eef2ff;text-align:left;white-space:nowrap}
+.activity-table thead th{position:sticky;top:0;background:#f5f8ff;font-weight:700}
+.activity-table tbody tr:hover{background:#fafcff}
+.activity-table tbody tr:last-child td{border-bottom:none}
+.cell-email{min-width:240px}
+.cell-time{min-width:200px}
+.empty{padding:18px;text-align:center;color:var(--muted)}
+
+.badge{
+  display:inline-flex;align-items:center;justify-content:center;
+  height:24px; padding:0 10px; border-radius:999px; font-size:12px; font-weight:800;
+  background:var(--pill); color:#fff; text-transform:capitalize;
+}
+.action-login{background:var(--pill)}
+.action-logout{background:var(--pill-muted)}
+.action-created{background:var(--blue)}
+.action-deleted{background:var(--red)}
+.action-activated{background:var(--green)}
+.action-deactivated{background:var(--amber); color:#111827}
+
+.cards-grid{display:none;gap:12px;margin-top:12px}
+.card{
+  background:var(--card); border:1px solid var(--ring); border-radius:14px; box-shadow:var(--shadow);
+}
+.activity-card{padding:12px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px dashed #eef2ff}
+.row:last-child{border-bottom:none}
+.label{color:var(--muted);font-size:12px}
+.value{font-weight:700}
+.ellipsis{max-width:200px;overflow:hidden;text-overflow:ellipsis}
+
+@media (max-width:700px){
+  .table-card{display:none}
+  .cards-grid{display:grid}
+}
