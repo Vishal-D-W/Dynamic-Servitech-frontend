@@ -4,6 +4,14 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import '../styles/Login.css';
 
+const toMessage = (err) => {
+  if (!err) return 'Something went wrong';
+  if (typeof err === 'string') return err;
+  if (err.response?.data?.error) return String(err.response.data.error);
+  if (err.message) return String(err.message);
+  try { return JSON.stringify(err); } catch { return 'Something went wrong'; }
+};
+
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -20,15 +28,15 @@ const Login = () => {
     e.preventDefault();
     setError('');
     setLoading(true);
-
     try {
-      const response = await axios.post('/api/auth/login', { email, password });
-      const { token, user } = response.data;
+      const { data } = await axios.post('/api/auth/login', { email, password });
+      const { token, user } = data || {};
+      if (!token || !user) throw new Error('Invalid response from server');
 
       login(user, token);
       navigate(user.role === 'admin' ? '/admin' : '/dashboard');
     } catch (err) {
-      setError(err.response?.data?.error || 'Login failed');
+      setError(toMessage(err));
     } finally {
       setLoading(false);
     }
@@ -38,16 +46,15 @@ const Login = () => {
     e.preventDefault();
     setError('');
     setLoading(true);
-
     try {
-      await axios.post('/api/auth/signup', {
+      const { data } = await axios.post('/api/auth/signup', {
         username,
         email,
         password,
         confirmPassword,
       });
+      if (!data) throw new Error('Invalid response from server');
 
-      setError('');
       alert('Account created! Please wait for admin activation.');
       setIsSignup(false);
       setUsername('');
@@ -55,7 +62,7 @@ const Login = () => {
       setPassword('');
       setConfirmPassword('');
     } catch (err) {
-      setError(err.response?.data?.error || 'Signup failed');
+      setError(toMessage(err));
     } finally {
       setLoading(false);
     }
@@ -134,7 +141,7 @@ const Login = () => {
               {loading ? 'Signing In...' : 'Sign In'}
             </button>
             <p className="toggle-form">
-              Don't have an account?{' '}
+              Don&apos;t have an account?{' '}
               <button type="button" onClick={() => setIsSignup(true)}>
                 Create Account
               </button>
