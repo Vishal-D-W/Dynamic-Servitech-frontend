@@ -1,18 +1,16 @@
 import React, { useState, useContext } from 'react';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import '../styles/Login.css';
 
-function toMessage(err) {
+const toMessage = (err) => {
   if (!err) return 'Something went wrong';
   if (typeof err === 'string') return err;
-  if (err.message) return err.message;
-  try {
-    return JSON.stringify(err);
-  } catch {
-    return 'Something went wrong';
-  }
-}
+  if (err.response?.data?.error) return String(err.response.data.error);
+  if (err.message) return String(err.message);
+  try { return JSON.stringify(err); } catch { return 'Something went wrong'; }
+};
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -30,19 +28,8 @@ const Login = () => {
     e.preventDefault();
     setError('');
     setLoading(true);
-
     try {
-      const res = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
-      });
-
-      const data = await res.json().catch(() => null);
-      if (!res.ok) {
-        throw new Error(data?.error || data?.message || 'Login failed');
-      }
-
+      const { data } = await axios.post('/api/auth/login', { email, password });
       const { token, user } = data || {};
       if (!token || !user) throw new Error('Invalid response from server');
 
@@ -59,18 +46,14 @@ const Login = () => {
     e.preventDefault();
     setError('');
     setLoading(true);
-
     try {
-      const res = await fetch('/api/auth/signup', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, email, password, confirmPassword })
+      const { data } = await axios.post('/api/auth/signup', {
+        username,
+        email,
+        password,
+        confirmPassword,
       });
-
-      const data = await res.json().catch(() => null);
-      if (!res.ok) {
-        throw new Error(data?.error || data?.message || 'Signup failed');
-      }
+      if (!data) throw new Error('Invalid response from server');
 
       alert('Account created! Please wait for admin activation.');
       setIsSignup(false);
@@ -158,7 +141,7 @@ const Login = () => {
               {loading ? 'Signing In...' : 'Sign In'}
             </button>
             <p className="toggle-form">
-              Don't have an account?{' '}
+              Don&apos;t have an account?{' '}
               <button type="button" onClick={() => setIsSignup(true)}>
                 Create Account
               </button>
