@@ -4,10 +4,12 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import '../styles/Login.css';
 
+// Always turn unknown errors into a string
 const toMessage = (err) => {
   if (!err) return 'Something went wrong';
   if (typeof err === 'string') return err;
   if (err.response?.data?.error) return String(err.response.data.error);
+  if (err.response?.data?.message) return String(err.response.data.message);
   if (err.message) return String(err.message);
   try { return JSON.stringify(err); } catch { return 'Something went wrong'; }
 };
